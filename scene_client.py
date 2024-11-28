@@ -11,7 +11,7 @@ class SceneClient:
             <soapenv:Header/>
             <soapenv:Body>
                 <tns:DescribeScene>
-                    <tns:request>Describe the scene in the view</tns:request>
+                    <tns:question>Describe the scene in the view</tns:question>
                 </tns:DescribeScene>
             </soapenv:Body>
         </soapenv:Envelope>
