@@ -27,8 +27,8 @@ def main():
 
     # Predefined list of value-question pairs
     queries = [
-        (1, "Is there a human? Only answer True or False."),
-        (2, "How many humans in the scene? Only answer the number."),
+        (1, "Describe the scene in detail."),
+        (2, "Describe the scene in detail."),
         # (3, "Describe the scene in detail."),
     ]
 
@@ -43,6 +43,7 @@ def main():
             # Send the question to the server
             print(f"Sending Question: '{question}'")
             response = client.send_request(value, question)
+            print(f"Response debug: '{response}'")
             raw_response = response['response']  
             formatted_response = raw_response.split("\n")[-1].strip()
             # Store and print the response
@@ -55,12 +56,12 @@ def main():
         input()
 
         # Display all collected responses
-        # print("\nCollected Responses for Review:")
-        # for idx, entry in enumerate(responses, 1):
-        #     raw_response = entry['response']['response'] 
-        #     # Extract the part after the last '\n'
-        #     formatted_response = raw_response.split("\n")[-1].strip()
-        #     print(f"{idx}. Question: {entry['question']}, Response: {formatted_response}")
+        print("\nCollected Responses for Review:")
+        for idx, entry in enumerate(responses, 1):
+            raw_response = entry['response']['response'] 
+            # Extract the part after the last '\n'
+            formatted_response = raw_response.split("\n")[-1].strip()
+            print(f"{idx}. Question: {entry['question']}, Response: {formatted_response}")
 
     except KeyboardInterrupt:
         print("\nExiting...")
