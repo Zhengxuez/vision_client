@@ -28,7 +28,7 @@ def main():
     # Predefined list of value-question pairs
     queries = [
         (1, "Is there a human? Only answer True or False."),
-        (2, "How many humans in the scene?"),
+        (2, "How many humans in the scene? Only answer the number."),
         # (3, "Describe the scene in detail."),
     ]
 
@@ -37,26 +37,30 @@ def main():
     try:
         for value, question in queries:
             # Move the robot to the predefined position
-            print(f"\nStarting inspection for Value={value}, Question='{question}'")
+            # print(f"\nStarting inspection for Value={value}, Question='{question}'")
             move_robot_to_position(value)
 
             # Send the question to the server
             print(f"Sending Question: '{question}'")
-            response = client.send_request(value, question)  # No value sent to server
-
+            response = client.send_request(value, question)
+            raw_response = response['response']  
+            formatted_response = raw_response.split("\n")[-1].strip()
             # Store and print the response
             responses.append({"value": value, "question": question, "response": response})
-            print("Response:", response)
+            print("Response:", formatted_response)
 
-        # After all inspections are done, wait for human input
-        print("\nAll questions have been answered.")
+
+        print("\nAll inspections have been done.")
         print("Press Enter to continue to the next step after inspection.")
-        input()  # Wait for user to press Enter
+        input()
 
         # Display all collected responses
-        print("\nCollected Responses for Review:")
-        for idx, entry in enumerate(responses, 1):
-            print(f"{idx}. Question: {entry['question']}, Response: {entry['response']}")
+        # print("\nCollected Responses for Review:")
+        # for idx, entry in enumerate(responses, 1):
+        #     raw_response = entry['response']['response'] 
+        #     # Extract the part after the last '\n'
+        #     formatted_response = raw_response.split("\n")[-1].strip()
+        #     print(f"{idx}. Question: {entry['question']}, Response: {formatted_response}")
 
     except KeyboardInterrupt:
         print("\nExiting...")
